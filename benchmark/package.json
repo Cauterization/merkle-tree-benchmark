@@ -1,0 +1,28 @@
+{
+  "name": "benchmark",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "benchmark": "node benchmarks/benchmark.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethereumjs/mpt": "7.0.0-alpha.1",
+    "@ethereumjs/util": "^9.1.0",
+    "@ethereumjs/verkle": "10.0.0-dev-rc.1",
+    "benchmark": "^2.1.4",
+    "crypto": "^1.0.1",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.5.1",
+    "micro-eth-signer": "^0.14.0",
+    "performance-now": "^2.1.0",
+    "undici": "^5.28.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "type": "module"
+}
