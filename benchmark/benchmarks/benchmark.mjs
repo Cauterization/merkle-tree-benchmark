@@ -8,14 +8,21 @@ import { utf8ToBytes } from '@ethereumjs/util';
 proofBenches();
 
 async function proofBenches() {
-  // There is no exclusion proof in OZ
+  // There is no native exclusion proof in OZ, , however it can be implemented if tree is sorted
+  await proofBench(OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), OZ.makeProof, genKVLeavesCommon, genKVNonMembersCommon)
+
+  // There is native exclusion proof in EthMpt
   await proofBench (EthMpt.name, EthMpt.rootBuilding, EthMpt.makeProof, genKVLeavesCommon, genKVNonMembersCommon)
+
+  // Eth verkle doesn't support proofs at all
+
   // There is no exclusion proof in MerkleTreeJs, however it can be implemented if tree is sorted
 }
 
 async function rootBuildingBenches () {
   await rootBuildingBench ("SimpleMerkleTree " + OZ.name, OZ.rootBuildingSimple);
-  await rootBuildingBench ("StandardMerkleTree " + OZ.name, OZ.rootBuildingStandart, genKVLeavesCommon);
+  await rootBuildingBench ("StandardMerkleTree unsorted " + OZ.name, (leaves) => OZ.rootBuildingStandart(false, leaves), genKVLeavesCommon);
+  await rootBuildingBench ("StandardMerkleTree sorted " + OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), genKVLeavesCommon);
   await rootBuildingBench (EthMpt.name, EthMpt.rootBuilding);
   await rootBuildingBench (EthVerkle.name, EthVerkle.rootBuilding, genKVLeavesCommon);
   await rootBuildingBench ("sorted " + MerkleTreeJs.name, (leaves) => MerkleTreeJs.rootBuilding(true, leaves));
@@ -38,8 +45,8 @@ async function proofBench (name, buildTree, makeProof, genLeaves = genLeavesComm
 }
 
 async function rootBuildingBench (name, buildRoot, genLeaves = genLeavesCommon) {
-  // const rootBuildingLeavesNum = [1000, 10000, 100000];
-  const rootBuildingLeavesNum = [1000];
+  const rootBuildingLeavesNum = [1000, 10000, 100000];
+  // const rootBuildingLeavesNum = [1000];
 
   console.log("\n\n\nroot building", name)
   for (const numLeaves of rootBuildingLeavesNum) {

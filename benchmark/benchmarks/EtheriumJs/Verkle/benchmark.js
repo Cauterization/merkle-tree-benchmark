@@ -30,7 +30,6 @@ export async function rootBuilding(leaves) {
   for (const [key, value] of leaves) {
     await tree.put(key, value);
   }
-  const root = tree.root();
-  // console.log(root)
-  return (root.toString('hex'))
+  // console.log(tree.root())
+  return tree;
 };
