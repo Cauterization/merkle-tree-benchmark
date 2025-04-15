@@ -18,7 +18,7 @@ export async function rootBuilding(isSorted, leaves) {
   const tree = new MerkleTree(leaves, sha256, { sortPairs: isSorted });
   const root = tree.getRoot();
   // console.log(root)
-  return (root.toString('hex'))
+  return tree
 };
 
 function sha256(data) {

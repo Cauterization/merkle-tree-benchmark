@@ -4,16 +4,16 @@ import crypto from 'crypto';
 
 export const name = "https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/mpt";
 
-export function genLeaves(numLeaves) {
-  const leaves = Array.from([]);
-  for (let i = 0; i < numLeaves; i++) {
-    const key = utf8ToBytes(`key-${i}`).slice(0, 31);
-    const value = utf8ToBytes(`value-${i}`).slice(0, 31);
-    leaves.push([key, value])
-  }
-  return leaves;
+// export function genLeaves(numLeaves) {
+//   const leaves = Array.from([]);
+//   for (let i = 0; i < numLeaves; i++) {
+//     const key = utf8ToBytes(`key-${i}`).slice(0, 31);
+//     const value = utf8ToBytes(`value-${i}`).slice(0, 31);
+//     leaves.push([key, value])
+//   }
+//   return leaves;
 
-}
+// }
 
 export async function rootBuilding(leaves) {
   const trie = await createMPT({ db: new MapDB() });

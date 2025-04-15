@@ -5,7 +5,7 @@ set -e
 JS_BENCH_SCRIPT="benchmarks/benchmark.mjs"
 RUST_BENCH_DIR="Fuel"
 
-# echo "Running Rust benchmarks..."
+echo "Running Rust benchmarks..."
 if [ -d "$RUST_BENCH_DIR" ]; then
     cd "$RUST_BENCH_DIR"
     cargo run || { echo "Rust benchmarks failed"; exit 1; }
