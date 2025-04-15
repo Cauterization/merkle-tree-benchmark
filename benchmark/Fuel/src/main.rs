@@ -1,7 +1,7 @@
 mod bench;  // Add this line to declare the bench module
 
-use bench::run_simple_bench;
+use bench::root_building_bench;
 
 fn main() {
-    run_simple_bench();
+    root_building_bench();
 }

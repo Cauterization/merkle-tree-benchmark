@@ -4,8 +4,12 @@ import * as EthVerkle from './EtheriumJs/Verkle/benchmark.js'
 import * as MerkleTreeJs from './MerkleTreeJs/benchmark.js'
 import { utf8ToBytes } from '@ethereumjs/util';
 
-// rootBuildingBenches();
-proofBenches();
+main ();
+
+async function main() {
+  await rootBuildingBenches();
+  await proofBenches();
+} 
 
 async function proofBenches() {
   // There is no native exclusion proof in OZ, , however it can be implemented if tree is sorted

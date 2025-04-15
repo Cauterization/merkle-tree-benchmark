@@ -1,9 +1,10 @@
 // benches/merkle_bench.rs
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use fuel_merkle::binary::in_memory::MerkleTree;
 use sha2::{Sha256, Digest};
 use std::time::Instant;
 
+
+// Root building bench for merkle tree
 fn generate_leaves(n: usize) -> Vec<Vec<u8>> {
     (0..n)
         .map(|i| {
@@ -27,30 +28,9 @@ fn build_tree(leaves: &[Vec<u8>]) -> (MerkleTree, [u8; 32]) {
     (tree, root)
 }
 
-fn bench_merkle(c: &mut Criterion) {
-    let mut group = c.benchmark_group("Fuel Merkle");
-    
-    for count in [1_000, 10_000, 100_000].iter() {
-        group.bench_with_input(
-            format!("{} leaves", count),
-            count,
-            |b, &n| {
-                let leaves = generate_leaves(n);
-                b.iter(|| {
-                    let (_, root) = build_tree(black_box(&leaves));
-                    black_box(root);
-                })
-            }
-        );
-    }
-    
-    group.finish();
-}
-
-// Simple benchmark for direct timing
-pub fn run_simple_bench() {
+pub fn root_building_bench() {
     let counts = [1_000, 10_000, 100_000];
-    println!("\n\n\nroot building https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src");
+    println!("\n\n\nroot building Merkle tree https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src");
     
     for count in counts {
         let leaves = generate_leaves(count);
@@ -66,5 +46,36 @@ pub fn run_simple_bench() {
     }
 }
 
-criterion_group!(benches, bench_merkle);
-criterion_main!(benches);
+// Non-membership proof bench for sparse tree
+// fn generate_sparse_leaves(n: usize) -> Vec<(MerkleTreeKey, Vec<u8>)> {
+//     let mut rng = rand::thread_rng();
+//     (0..n)
+//         .map(|i| {
+//             let mut key_bytes = [0u8; 32];
+//             rng.fill(&mut key_bytes);
+//             let key = MerkleTreeKey::from_bytes(key_bytes);
+            
+//             let mut value = format!("value-{}", i).into_bytes();
+//             value.truncate(31);
+            
+//             (key, value)
+//         })
+//         .collect()
+// }
+
+// Build sparse tree with proper initialization
+// fn build_sparse_tree(entries: &[(MerkleTreeKey, Vec<u8>)]) -> SparseMerkleTree<MemoryStorage> {
+//     // 1. Initialize in-memory storage
+//     let storage = MemoryStorage::new();
+    
+//     // 2. Create tree with storage
+//     let mut tree = SparseMerkleTree::new(storage);
+    
+//     // 3. Insert entries
+//     for (key, value) in entries {
+//         tree.update(*key, value.as_slice())
+//             .expect("Failed to update tree");
+//     }
+    
+//     tree
+// }
