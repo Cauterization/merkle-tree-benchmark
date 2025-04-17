@@ -14,7 +14,7 @@ impl fuel_merkle::storage::Mappable for BenchTable {
     type Value = Self::OwnedValue;
 }
 
-static name: &str = "https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src";
+static NAME: &str = "https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src";
 
 fn generate_entries(n: usize) -> Vec<(MerkleTreeKey, Vec<u8>)> {
     (0..n)
@@ -53,7 +53,7 @@ pub fn sparse_root_building_bench() {
     let counts = [1_000, 10_000, 100_000];
     println!(
         "\n\n\nroot building Sparse Merkle tree {}",
-        name);
+        NAME);
     
     for count in counts {
         let entries = generate_entries(count);
@@ -74,11 +74,7 @@ pub fn sparse_root_building_bench() {
 pub fn non_membership_proof_bench() {
     let leaf_count = 10_000;
     let proof_count = 1_000;
-    
-    println!(
-        "\n\n\nNon-Membership Proof Generation Benchmark {}",
-        name
-    );
+
     println!(
         "\n\n\nnon-membership proof ({} proofs, {} leaves)",
         proof_count,

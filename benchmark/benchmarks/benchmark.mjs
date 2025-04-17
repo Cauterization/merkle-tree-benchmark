@@ -9,7 +9,7 @@ main ();
 async function main() {
   await rootBuildingBenches();
   await proofBenches();
-} 
+}
 
 async function proofBenches() {
   // There is no native exclusion proof in OZ, , however it can be implemented if tree is sorted
@@ -25,8 +25,8 @@ async function proofBenches() {
 
 async function rootBuildingBenches () {
   await rootBuildingBench ("SimpleMerkleTree " + OZ.name, OZ.rootBuildingSimple);
-  await rootBuildingBench ("StandardMerkleTree unsorted " + OZ.name, (leaves) => OZ.rootBuildingStandart(false, leaves), genKVLeavesCommon);
-  await rootBuildingBench ("StandardMerkleTree sorted " + OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), genKVLeavesCommon);
+  await rootBuildingBench ("sorted + StandardMerkleTree" + OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), genKVLeavesCommon);
+  await rootBuildingBench ("unsorted + StandardMerkleTree" + OZ.name, (leaves) => OZ.rootBuildingStandart(false, leaves), genKVLeavesCommon);
   await rootBuildingBench (EthMpt.name, EthMpt.rootBuilding);
   await rootBuildingBench (EthVerkle.name, EthVerkle.rootBuilding, genKVLeavesCommon);
   await rootBuildingBench ("sorted " + MerkleTreeJs.name, (leaves) => MerkleTreeJs.rootBuilding(true, leaves));
