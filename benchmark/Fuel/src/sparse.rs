@@ -4,7 +4,7 @@ use fuel_merkle::{
 };
 use fuel_merkle::common::StorageMap;
 use std::time::Instant;
-
+use std::collections::HashSet;
 struct BenchTable;
 
 impl fuel_merkle::storage::Mappable for BenchTable {
@@ -13,6 +13,8 @@ impl fuel_merkle::storage::Mappable for BenchTable {
     type OwnedValue = fuel_merkle::sparse::Primitive;
     type Value = Self::OwnedValue;
 }
+
+static name: &str = "https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src";
 
 fn generate_entries(n: usize) -> Vec<(MerkleTreeKey, Vec<u8>)> {
     (0..n)
@@ -49,7 +51,9 @@ fn build_sparse_tree<'a>(
 
 pub fn sparse_root_building_bench() {
     let counts = [1_000, 10_000, 100_000];
-    println!("\n\n\nroot building Sparse Merkle tree https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle/src");
+    println!(
+        "\n\n\nroot building Sparse Merkle tree {}",
+        name);
     
     for count in counts {
         let entries = generate_entries(count);
@@ -66,3 +70,64 @@ pub fn sparse_root_building_bench() {
         );
     }
 }
+
+pub fn non_membership_proof_bench() {
+    let leaf_count = 10_000;
+    let proof_count = 1_000;
+    
+    println!(
+        "\n\n\nNon-Membership Proof Generation Benchmark {}",
+        name
+    );
+    println!(
+        "\n\n\nnon-membership proof ({} proofs, {} leaves)",
+        proof_count,
+        leaf_count,
+    );
+    
+    let entries = generate_entries(leaf_count);
+    let mut storage = StorageMap::<BenchTable>::new();
+    let mut tree = MerkleTree::new(&mut storage);
+    for (key, value) in &entries {
+        tree.insert(*key, value).unwrap();
+    }
+    
+    let non_members = generate_non_members(&entries, proof_count);
+    
+    let start = Instant::now();
+    for (key, _) in &non_members {
+        let _proof = tree.generate_proof(key).unwrap();
+    }
+    let duration = start.elapsed();
+    
+    println!(
+        "{:.2}ms",
+        duration.as_secs_f64() * 1000.0
+    );
+}
+
+fn generate_non_members(
+    entries: &[(MerkleTreeKey, Vec<u8>)],
+    num_non_members: usize
+) -> Vec<(MerkleTreeKey, Vec<u8>)> {
+    let existing_keys: HashSet<_> = entries.iter()
+        .map(|(k, _)| k)
+        .collect();
+    
+    (0..num_non_members)
+        .map(|i| {
+            let mut key_bytes = [0u8; 32];
+            let key_str = format!("non-member-{}", i);
+            key_bytes[..key_str.len().min(32)].copy_from_slice(key_str.as_bytes());
+            let mut value = format!("non-member-{}", i).into_bytes();
+            value.truncate(31);
+            loop {
+                let key = MerkleTreeKey::new(key_bytes);
+                if !existing_keys.contains(&key) {
+                    return (key, value);
+                }
+            }
+        })
+        .collect()
+}
+
