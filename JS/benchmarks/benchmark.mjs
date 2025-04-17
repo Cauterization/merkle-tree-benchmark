@@ -25,8 +25,8 @@ async function proofBenches() {
 
 async function rootBuildingBenches () {
   await rootBuildingBench ("SimpleMerkleTree " + OZ.name, OZ.rootBuildingSimple);
-  await rootBuildingBench ("sorted + StandardMerkleTree" + OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), genKVLeavesCommon);
-  await rootBuildingBench ("unsorted + StandardMerkleTree" + OZ.name, (leaves) => OZ.rootBuildingStandart(false, leaves), genKVLeavesCommon);
+  await rootBuildingBench ("sorted + StandardMerkleTree " + OZ.name, (leaves) => OZ.rootBuildingStandart(true, leaves), genKVLeavesCommon);
+  await rootBuildingBench ("unsorted + StandardMerkleTree " + OZ.name, (leaves) => OZ.rootBuildingStandart(false, leaves), genKVLeavesCommon);
   await rootBuildingBench (EthMpt.name, EthMpt.rootBuilding);
   await rootBuildingBench (EthVerkle.name, EthVerkle.rootBuilding, genKVLeavesCommon);
   await rootBuildingBench ("sorted " + MerkleTreeJs.name, (leaves) => MerkleTreeJs.rootBuilding(true, leaves));
@@ -66,7 +66,7 @@ function genLeavesCommon(numLeaves) {
   const leaves = Array.from([]);
     for (let i = 0; i < numLeaves; i++) {
       const paddedValue = new Uint8Array(31);
-      paddedValue.set(utf8ToBytes(`value-${i}`), 0);
+      paddedValue.set(utf8ToBytes(`${i}-value`), 0);
       leaves.push(paddedValue)
     }
     return leaves;
@@ -76,9 +76,9 @@ function genKVLeavesCommon(numLeaves) {
   const leaves = Array.from([]);
   for (let i = 0; i < numLeaves; i++) {
     const paddedKey = new Uint8Array(31);
-    paddedKey.set(utf8ToBytes(`key-${i}`), 0);
+    paddedKey.set(utf8ToBytes(`${i}-key`), 0);
     const paddedValue = new Uint8Array(31);
-    paddedValue.set(utf8ToBytes(`value-${i}`), 0);
+    paddedValue.set(utf8ToBytes(`${i}-value`), 0);
     leaves.push([paddedKey, paddedValue])
   }
   return leaves;
@@ -88,7 +88,7 @@ function genNonMembersCommon(leaves, numNonMembers) {
   const nonMembers = Array.from([]);
   for (let i = 0;; i++) {
     const paddedValue = new Uint8Array(31);
-    paddedValue.set(utf8ToBytes(`non-member-${i}`).slice(0, 31));
+    paddedValue.set(utf8ToBytes(`${i}-non-member`).slice(0, 31));
     if (!leaves.includes(paddedValue)) nonMembers.push(paddedValue);
     if (nonMembers.length >= numNonMembers) return nonMembers;
   }
@@ -98,9 +98,9 @@ function genKVNonMembersCommon(leaves, numNonMembers) {
   const nonMembers = Array.from([]);
   for (let i = 0;; i++) {
     const paddedKey = new Uint8Array(31);
-    paddedKey.set(utf8ToBytes(`non-member-${i}`).slice(0, 31));
+    paddedKey.set(utf8ToBytes(`${i}-non-member`).slice(0, 31));
     const paddedValue = new Uint8Array(31);
-    paddedValue.set(utf8ToBytes(`non-member-${i}`).slice(0, 31));
+    paddedValue.set(utf8ToBytes(`${i}-non-member`).slice(0, 31));
     const kv = [paddedKey, paddedValue ]
     if (!leaves.includes(kv)) nonMembers.push(kv);
     if (nonMembers.length >= numNonMembers) return nonMembers;

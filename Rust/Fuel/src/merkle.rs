@@ -6,7 +6,7 @@ use std::time::Instant;
 fn generate_leaves(n: usize) -> Vec<Vec<u8>> {
     (0..n)
         .map(|i| {
-            let mut bytes = format!("value-{}", i).into_bytes();
+            let mut bytes = format!("{}-value", i).into_bytes();
             bytes.truncate(31);
             bytes
         })

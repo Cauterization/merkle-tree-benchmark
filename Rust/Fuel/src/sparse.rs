@@ -20,12 +20,12 @@ fn generate_entries(n: usize) -> Vec<(MerkleTreeKey, Vec<u8>)> {
     (0..n)
         .map(|i| {
             let mut key_bytes = [0u8; 32];
-            let key_str = format!("key-{}", i);
+            let key_str = format!("{}-key", i);
             let key_str_bytes = key_str.as_bytes();
             let copy_len = key_str_bytes.len().min(32);
             key_bytes[..copy_len].copy_from_slice(&key_str_bytes[..copy_len]);
             
-            let mut value = format!("value-{}", i).into_bytes();
+            let mut value = format!("{}-value", i).into_bytes();
             value.truncate(31);
             
             (
@@ -113,9 +113,9 @@ fn generate_non_members(
     (0..num_non_members)
         .map(|i| {
             let mut key_bytes = [0u8; 32];
-            let key_str = format!("non-member-{}", i);
+            let key_str = format!("{}-non-member", i);
             key_bytes[..key_str.len().min(32)].copy_from_slice(key_str.as_bytes());
-            let mut value = format!("non-member-{}", i).into_bytes();
+            let mut value = format!("{}-non-member", i).into_bytes();
             value.truncate(31);
             loop {
                 let key = MerkleTreeKey::new(key_bytes);
