@@ -8,7 +8,7 @@ edition = "2021"
 criterion = "0.4"
 rand = "0.8"
 sha2 = "0.10"
-fuel-merkle = "0.50.0"
+fuel-merkle = { git = "https://github.com/FuelLabs/fuel-vm", package = "fuel-merkle", branch = "master" }
 
 [[bench]]
 name = "bench"
@@ -16,7 +16,7 @@ harness = false
 
 [dependencies]
 criterion = "0.4"
-fuel-merkle = "0.50.0"
+fuel-merkle = { git = "https://github.com/FuelLabs/fuel-vm", package = "fuel-merkle", branch = "master" }
 hex = "0.4"
 sha2 = "0.10"
 rand = "0.8"

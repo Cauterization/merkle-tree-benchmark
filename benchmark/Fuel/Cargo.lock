@@ -253,9 +253,8 @@ checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 
 [[package]]
 name = "fuel-merkle"
-version = "0.50.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "faa4b60ddfa51b64d02a1d71b0cf51488171d313b32ae3fb9f39f64ddd21791b"
+version = "0.60.0"
+source = "git+https://github.com/FuelLabs/fuel-vm?branch=master#1e37f0d60bec8cef18893b224f403f5037ddc08c"
 dependencies = [
  "derive_more",
  "digest",
@@ -267,9 +266,8 @@ dependencies = [
 
 [[package]]
 name = "fuel-storage"
-version = "0.50.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "beef5f12c40118e87ef6abf611c6bba5c88754e727fb825120ae7d0872123055"
+version = "0.60.0"
+source = "git+https://github.com/FuelLabs/fuel-vm?branch=master#1e37f0d60bec8cef18893b224f403f5037ddc08c"
 
 [[package]]
 name = "generic-array"

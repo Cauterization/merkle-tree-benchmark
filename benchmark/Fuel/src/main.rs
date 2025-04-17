@@ -1,7 +1,11 @@
-mod bench;  // Add this line to declare the bench module
+mod merkle;
+mod sparse;
 
-use bench::root_building_bench;
+
+use merkle::merkle_root_building_bench;
+use sparse::sparse_root_building_bench;
 
 fn main() {
-    root_building_bench();
+    merkle_root_building_bench();
+    sparse_root_building_bench();
 }
