@@ -10,10 +10,6 @@ rand = "0.8"
 sha2 = "0.10"
 fuel-merkle = { git = "https://github.com/FuelLabs/fuel-vm", package = "fuel-merkle", branch = "master" }
 
-[[bench]]
-name = "bench"
-harness = false
-
 [dependencies]
 criterion = "0.4"
 fuel-merkle = { git = "https://github.com/FuelLabs/fuel-vm", package = "fuel-merkle", branch = "master" }
