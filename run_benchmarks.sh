@@ -2,8 +2,8 @@
 
 set -e
 
-JS_BENCH_SCRIPT="benchmarks/benchmark.mjs"
-RUST_BENCH_DIR="Fuel"
+JS_BENCH_SCRIPT="JS/benchmarks/benchmark.mjs"
+RUST_BENCH_DIR="Rust/Fuel"
 
 echo "Running Rust benchmarks..."
 if [ -d "$RUST_BENCH_DIR" ]; then

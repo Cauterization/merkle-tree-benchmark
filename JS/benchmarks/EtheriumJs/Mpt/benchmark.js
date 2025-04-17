@@ -10,6 +10,7 @@ export async function rootBuilding(leaves) {
   for (const [key, value] of leaves) {
     await trie.put(key, value);
   }
+  const root = trie.root()
   // console.log(trie.root())
   return trie
 };

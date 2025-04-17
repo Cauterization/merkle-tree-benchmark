@@ -7,12 +7,14 @@ export const name = "https://github.com/OpenZeppelin/merkle-tree"
 
 export function rootBuildingSimple(leaves) {
   const tree = SimpleMerkleTree.of(leaves)
+  const root = tree.root
   // console.log(tree.root)
   return tree
 };
 
 export function rootBuildingStandart(isSorted, leaves) {
   const tree = StandardMerkleTree.of(leaves, ["bytes31", "bytes31"], {sortLeaves: isSorted})
+  const root = tree.root
   // console.log(tree.root)
   return tree
 }

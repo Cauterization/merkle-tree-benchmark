@@ -17,7 +17,6 @@ export function genLeaves(numLeaves) {
   return leaves;
 }
 
-// It doesn't work - root always 0x0000...
 export async function rootBuilding(leaves) {
   const db = new MapDB();
   const tree = new VerkleTree({
